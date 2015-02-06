@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+    <html>
+    <header>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    </header>
+    <body>
+
+    <h1 id = "time" style = "font-size:450%; text-align: center; font-family: 'Lucida Console', Monaco, monospace"></h1>
+
+    <div>
+        <table>
+            <tr>
+                <td id="demo"></td>
+                <td></td>
+                <td>
+                    <a id = "link" href = "">Tarak Mehta</a>
+                </td>
+            </tr>
+            <tr><td></td><td></td>
+                <td>
+                    <select id="showlist" onchange="window.open(this.options[this.selectedIndex].value,'_top')">
+                        <option value=''>Select Your Show:</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <br>
+
+    <iframe width="560" height="315" src="//www.youtube.com/embed/videoseries?list=PL6Rtnh6YJK7a6aWvIzLwbDe6FzzowRhMq" frameborder="0" allowfullscreen></iframe>
+
+    <br><br><hr><br>
+
+    <div>
+        <label>Enter your question: </label>
+        <input type="text" id="ans" onkeypress="getAnswer(event)">
+        <input type="button" value="submit" onclick="evalAnswer()">
+    </div>
+    <p id="used">Answer: </p>
+
+    <script>
+    var d = new Date();
+    function startTime(today) {
+        var h = today.getHours();
+        var m = today.getMinutes();
+        if(h > 12) h-= 12;
+        if(m < 10) m = "0" + m;
+        document.getElementById('time').innerHTML = h + ":" + m;
+        t = setTimeout(function () {
+            startTime()
+        }, 15500);
+    }
+    startTime(d);
+    var tarak = "http://desitvforum.net/tv-shows/taarak-mehta-ka-ooltah-chashmah-"
+    var day = d.getDate();
+    if(day == 1 || day == 21 || day == 31){
+        day += "st-";
+    }else if(day == 2 || day == 22){
+        day += "nd-";
+    }else if(day == 3 || day == 23){
+        day += "rd-";
+    }else{
+        day += "th-";
+    }
+    var monthNames = [ "january", "february", "march", "april", "may", "june",
+    "july", "august", "september", "october", "november", "december" ];
+    var month = monthNames[d.getMonth()] + "-";
+    var year = d.getFullYear() + "-video-watch-online/";
+    document.getElementById("demo").innerHTML = d.toDateString() + ":";
+    document.getElementById("link").href = tarak + day + month + year;
+    var showNames = ['arrow', 'the-flash', 'suits'];
+    for (var i = 0; i < showNames.length; i++) {
+        var optionStr = "<option value=\"http://www.cokeandpopcorn.ch/watch-" + showNames[i] + "-online.php\">" + showNames[i].toUpperCase().split('-').join(' ') + "</option>";
+        document.getElementById("showlist").innerHTML += optionStr;
+    };
+    var answer = "";
+    var flag = 0;
+    function getAnswer(event){
+      if(flag == 0){
+      answer += document.getElementById("ans").value;
+      document.getElementById("ans").value = "";
+        if(event.keycode == 13 || event.which == 13){
+            flag = 1;
+        }
+      }
+    };
+    function evalAnswer(){
+        document.getElementById("used").innerHTML += "<strong>" + answer + "</strong>";
+    }
+    </script>
+
+
+
+    </body>
+    </html>

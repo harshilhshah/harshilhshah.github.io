@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pianobar</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="text-center">
+			<h1>Pianobar</h1>
+			<caption>This project lets you remotely play radio from your pandora account using a raspberry pi.</caption>
+		</div>
+		<div class="col-md-5">
+			<br><h2>Things You Will Need:</h2>
+			<ul>
+				<li><a href="http://www.adafruit.com/products/998">Raspberry Pi Model B</a></li>
+				<li><a href="http://www.adafruit.com/categories/285">SD card</a> (4GB or larger)</li>
+				<li><a href="http://www.adafruit.com/products/592">Power adapter</a> (Make sure it has 5V power supply)</li>
+				<li>Ethernet cable or <a href="http://elinux.org/RPi_USB_Wi-Fi_Adapters">USB Wifi Adapter</a></li>
+				<li>HDMI cable or RCA cable</li>
+				<li>USB Keyboard and Mouse</li>
+				<li>Speaker or Headphones</li>
+				<li>Computer with Internet(for remote access)</li>
+				<li>Optional: USB Hub if you are using an usb wifi adapter</li>
+			</ul>
+		</div>
+		<img class="col-md-7"src="http://www4.pcmag.com/media/images/351321-raspberry-pi.jpg?thumb=y" style="height:300px;">
+		<h2>Set up:</h2>
+		<ol>
+			<li>Get an OS.</li>
+			<ul>
+				<li>Advanced users can chose their specific OS image but NOOBS is more preferable if you are a starter.</li><li>Download the OS disk image from <a href="http://www.raspberrypi.org/downloads/">the Raspberry Pi website</a> and follow their setup guide. It will take some time.</li> 
+				<li>Then plug the card into the Raspberry Pi's SD card reader</li>
+			</ul>
+			<li>Connect the USB keyboard and USB mouse to the two USB slots on the pi.</li>
+			<li>Connect the HDMI to HDMI cable, one end to the raspberry pi's hdmi port and the other end to the tv's hdmi port.</li>
+			<li>Connect the ethernet cable.</li>
+			<li>Connect the power adapter to the pi and plug it into a power source.</li>
+			<ul><li>You should see the red light appear. That means that the pi is getting power.</li>
+				<li>You shoud also see the green light flicker, this means that the ethernet cable is connected.</li>
+			</ul>
+				<li>When you first power up the pi, you will be presented with a configuration utility. Here are some changes I suggest: </li>
+			<ul>
+				<li>Expand Filesystem.</li>
+				<li>Change User Password.</li>
+				<li>Internationalisation Options -> Set keyboard, Set local, and Set timezone.</li>
+				<li>Advance Options -> SSH -> Enable SSH</li>
+			</ul>
+			<li>Once you are done with the configurations click Finish -> Reboot (YES). </li>
+		</ol>
+		<h2>Login:</h2>
+		<p><strong>Username:</strong> pi <br><strong>Password:</strong> raspberry</p>
+		<h2>Installation Part 1:</h2>
+		<ul>
+			<li>(Optional) To start/see the graphics enter: <code>startx</code></li>
+			<li>If you chose to see the graphical view than open Terminal. Terminal lets you write commands.</li>
+			<li>For the following commands it doesn't matter if you're using Terminal or still in the old view.</li>
+			<li>To setup your network or wifi, enter this command: <code>sudo nano /etc/network/interfaces</code></li>
+			<ul><li><strong>nano</strong>: text editor, you can use other popular ones such as emacs or vim</li>
+				<li><strong>/etc/network/inteface</strong>: The path to the file</li></ul>
+				<li>Click <a href = "http://www.mathworks.com/help/simulink/ug/getting-the-raspberry_pi-ip-address.html">here</a> to find the configurations for your network. </li>
+				<li>But if you are using a router with static IP then here is what should be stored in interface:</li>
+				<pre class="text-center">auto lo<br><br>iface lo inet loopback<br>iface eth0 inet dhcp<br>allow-hotplug wlan0<br>auto wlan0<br><br>iface wlan0 inet dhcp<br>wpa-ssid "ssid"<br>wpa-psk "password"</pre>
+				<em>*ssid =  (your wireless network name) and be sure it is still surrounded by quotes.<br>*password = password for your personal wireless network</em>
+				<li>Save the file: <code>(ctrl+x)</code> for nano, <code>(ctrl+x)(ctrl+c)</code> for emacs</li>
+				<li>Reboot the system: <code>sudo shutdown -h now</code></li>
+				<li>Unplug the power cord and then reconnect it</li>
+				<li>(Optional) You can remotely enter the commands from you computer now using SSH</li>
+			</ul>
+		</ul>
+		<h2>(Optional) SSH:</h2>
+		<ul>
+			<li>If you use Mac / Linux then open terminal. </li>
+			<li>If you use Windows download putty. Use this link: <a href="http://www.siteground.com/tutorials/ssh/putty.htm">http://www.siteground.com/tutorials/ssh/putty.htm</a></li>
+			<li>If you use iPhone then download this <a href ="https://itunes.apple.com/us/app/server-auditor-ssh-client/id549039908?mt=8">APP</a></li>
+			<li>If you use Android then download this <a href = "https://play.google.com/store/apps/details?id=org.connectbot">APP</a></li>
+			<li>In the Terminal of your raspberry pi enter this command: <code>ifconfig</code></li>
+			<li>To get the ip address of your pi find this part -> <strong>inet addr: xxx.xx.xx.xx</strong></li>
+			<li>In the terminal/putty/app in your computer enter: ssh pi@XXX.XX.XX.XX </li>
+			<ul>
+				<em>replace x with the ip address of your pi</em>
+			</ul>
+			<li>You can now use your computer to control the raspberry pi.</li>
+		</ul>
+		<h2>Installation Part 2:</h2>
+		<ul>
+			<li>First we need make sure the pi is updated so enter: <code> sudo apt-get update </code></li>
+			<li>After updating, which takes a lot of time, install pianobar: <code> sudo apt-get install pianobar </code></li> 
+			<li>We need to make a directory for this projects: <code> mkdir -p .config/pianobar </code></li>
+			<li>Navigate to the new directory: <code> cd ~/.config/pianobar </code></li>
+			<li>Create a configuration file called “config": <code> sudo nano config </code></li>
+			<p style="color:orange">Copy-paste this code into the file:</p>
+			<pre># See manpage for a description of the config keys<br>user = YOUR_EMAIL_ADDRESS<br>password = YOUR_PASSWORD<br># Keybindings<br>act_help = ?<br>act_songlove = +<br>act_songban = -<br>act_stationaddmusic = a<br>act_stationcreate = c<br>act_stationdelete = d<br>act_songexplain = e<br>act_stationaddbygenre = g<br>act_songinfo = i<br>act_addshared = j<br>act_songmove = m<br>act_songnext = n<br>act_songpause = p<br>act_quit = q<br>act_stationrename = r<br>act_stationchange = s<br>act_songtired = t<br>act_upcoming = u<br>act_stationselectquickmix = x<br>act_voldown = (<br>act_volup = )<br><br># Misc<br>#audio_quality = low<br>#autostart_station = 123456<br>#event_command = /home/pi/.config/pianobar/scripts/eventcmd.sh<br>#fifo = /home/pi/.config/pianobar/ctl<br>#sort = quickmix_10_name_az<br>#love_icon = [+]<br>#ban_icon = [-]<br>volume = -30<br><br># Format strings<br>format_nowplaying_song = SONG: %t | %a | %l<br>format_nowplaying_station = STATION: %n | %i<br>format_msg_time = TIME: %s<br># No special prefix on songs, stations or info<br>format_msg_nowplaying = %s<br>format_msg_info = %s<br># high-quality audio (192k mp3, for Pandora One subscribers only!)<br>#audio_quality = high<br>#rpc_host = internal-tuner.pandora.com<br>#partner_user = pandora one<br>#partner_password = TVCKIBGS9AO9TSYLNNFUML0743LH82D<br>#device = D01<br>#encrypt_password = 2%3WCL*JU$MP]4<br>#decrypt_password = U#IO$RZPAB%VX2<br><br>tls_fingerprint = 2D0AFDAFA16F4B5C0A43F3CB1D4752F9535507C0</pre>
+			<em>Change: YOUR_EMAIL_ADDRESS to your pandora account username and YOUR_PASSWORD to your pandora account password.</em>
+			<li>Exit: <code>(Ctrl+x)</code></li>
+			<li>Save the changes <code>(Enter Y)</code></li>
+			<li>To launch the Pianobar application type this command in terminal enter: <code>pianobar</code></li>
+		</ul>
+	</div>
+</body>
+</html>

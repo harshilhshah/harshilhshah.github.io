@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+ <head><title>HWs</title>  
+  <style type='text/css'>  
+     th, td{ border: 1px solid gray; padding: 5px; }  
+     h1{ text-align: center;} 
+  </style> 
+  <script type='text/javascript'>  
+    // Parses returned response and extracts  
+    // the title, links, and text of each news story.  
+    function top_stories(o){  
+      var items = o.query.results.body.table.tbody.tr[3].td[2].table.tbody.tr[0].td.table[2].tbody.tr[2].td.table.tbody.tr;
+      var output = '<table><th>HW #</th><th>Sections</th><th>Due date</th><th>HW problems</th>';  
+      var no_items=items.length;  
+      for(var i=1;i<no_items;i++){  
+        var weekNo = items[i].td[0].small.content;  
+        var section = items[i].td[2].small;
+        var due = items[i].td[3].small;
+        if(due != undefined) due = due.strong;
+        if(due instanceof Object) due = due.content + " " + due.font.content;
+        if(due == undefined) continue;
+        var hw = items[i].td[3].small.content;
+        if(hw == undefined) break;
+        output = "<table><th>HW #</th><th>Sections</th><th>Due date</th><th>HW problems</th><tr><td>" +  i + "</td><td>" + section + "</td><td>" + due + "</td><td style='color: blue'>" + hw + "</td></tr></table><hr/>";  
+      }
+      // Place news stories in div tag  
+      document.getElementById('results').innerHTML = output;    
+    }
+
+    function algoHW(o){
+      var cs344 = o.query.results.body.p.content;
+      var hwArr = cs344.split('HWK');
+      var count = hwArr.length;
+      document.getElementById('results2').innerHTML = hwArr[count - 1];
+    }  
+    </script>  
+  </head>  
+<body align="center" bgcolor="#FAFAD2">
+  <a href="https://general.physics.rutgers.edu/cgi/RUAssign.pl?204&semester=spring2015"><h1>Physics HW #2</h1></a>
+  <input type = "text" id="problem#" onkeypress="if (window.event.keyCode==13) getProblem()" placeholder="Enter the problem #"></input>
+
+<p id = "demo2"></p><hr>
+
+<script>
+  function getProblem(){
+  var uI = document.getElementById("problem#").value;
+  var ret = 0.0;
+  if(uI == 1) ret = problem1();
+  else if(uI == 2) ret = problem2();   
+  else if(uI == 3) ret = problem3();
+  else if(uI == 4) ret = problem4();
+  else if(uI == 5) ret = problem5();
+  else if(uI == 6) ret = problem6();
+  else if(uI == 7) ret = problem7();
+  else if(uI == 8) ret = problem8();
+  else if(uI == 9) ret = problem9();
+  else if(uI == 10) ret = problem10();
+  else ret = "Invalid input. Try Again.";
+  document.getElementById("demo2").innerHTML = uI + ") Ans: " + ret;
+  }
+</script>
+
+<script>
+  
+  const k = 8.99 * Math.pow(10, 9);
+
+  function problem1(){
+    var mg = prompt("Enter mass, the number before the \'x\'") * Math.pow(10, -3) *  9.8;
+    var q = prompt("Enter the charge of the ball (in uC)") * Math.pow(10, -6);
+    var theta = prompt("Enter the angle: ") * 1.0;
+    var area = prompt("Enter area of each plate") * 1.0;
+    return (mg * Math.tan(toRadians(theta)) * 8.85 * area * Math.pow(10, -12)) / q;
+  }
+
+  function problem2(){
+    return 0;
+  }
+  
+  function problem3(){
+    var eFld = prompt("Enter the initial electric field: ") * Math.pow(10, -4);
+    return eFld * Math.sin(toRadians(45)) * 4;
+  }
+
+  function problem4(){
+    var a = prompt("Enter the distance: (in cm)") * Math.pow(10, -2);
+    var q2 = prompt("Enter charge q2 (in uC), no signs") * Math.pow(10,-6);
+    var q4 = prompt("Enter charge q4 (in uC), no signs") * Math.pow(10,-6);
+    var denom = (a * a) / 2;
+    var numera = (8.99 * Math.pow(10,9)) * q2 * q4;
+    return numera / denom;
+  }
+
+  function problem5(){
+    var area = prompt("Area of surface 2?");
+    var mag = prompt("Magnitude of the electric field:");
+    var theta = prompt("Angle:");
+    return area * mag * Math.sin(toRadians(theta));
+  }
+
+  function problem10(){
+    var x = prompt("Length x (in Meters): ");
+    var y = prompt("Length y (in Meters): ");
+    var v2 = k * (2.7)*Math.pow(10, -6)/x;
+    var v3 = k * (-3.3)*Math.pow(10, -6)/y;
+    return (v2 + v3) * (-6.1 * Math.pow(10, -6));
+  }
+  
+  function problem9(){
+    var x = prompt("Length x (in Meters): ");
+    var y = prompt("Length y (in Meters): ");
+    var d = Math.sqrt(((x/2)*(x/2)) + ((y/2)*(y/2)));
+    var v1 = k * (-6.1)*Math.pow(10, -6)/d;
+    var v2 = k * (2.7)*Math.pow(10, -6)/d;
+    var v3 = k * (-3.3)*Math.pow(10, -6)/d;
+    return v1 + v2 + v3;
+  }
+  
+  function problem8(){
+    var v = prompt("Enter the given V as is");
+    return v*-2;
+  }
+  
+  function problem7(){
+    var a = prompt("Enter the first angle (alpha)");
+    var b = prompt("Enter the second angle (beta)");
+    return (Math.sin(toRadians(a)))/(Math.sin(toRadians(b)));
+  }
+  
+  function problem6(){  
+    var r = prompt("Enter Em/Ep ratio:");
+    return toDegrees(Math.acos(1/Math.pow(r,1/3)));
+  }
+
+  function toRadians (angle) {
+    return angle * (Math.PI / 180);
+  }
+
+  function toDegrees (angle) {
+    return angle * (180 / Math.PI);
+  }
+ </script>
+
+ <a href="http://math.rutgers.edu/~alexk/2015S348/syllabus.html"><h1>Crypto HW</h1></a>
+    <div id='results'></div> 
+    <a href="http://www.cs.rutgers.edu/~kalantar/index2015CS344Homework.html"><h1>Algo HW</h1></a>
+    <div id='results2'></div>
+    <hr>
+    
+    <!-- The YQL statment will be assigned to src. -->  
+    <script src='https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fmath.rutgers.edu%2F~alexk%2F2015S348%2Fsyllabus.html%22&format=json&diagnostics=true&callback=top_stories'></script>  
+    <script src="https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.cs.rutgers.edu%2F~kalantar%2Findex2015CS344Homework.html%22&format=json&diagnostics=true&callback=algoHW"></script>
+
+</body>
+</html>
+
+
