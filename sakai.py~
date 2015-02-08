@@ -9,8 +9,8 @@ authInfo['usernameField']='username'
 authInfo['passwordField']='password'
 
 authInfo['loginURL']="https://cas.rutgers.edu/login?service=https%3A%2F%2Fsakai.rutgers.edu%2Fsakai-login-tool%2Fcontainer"
-authInfo['username']= ""
-authInfo['password']= ""
+authInfo['username']= "hhs30"
+authInfo['password']= "starHussey757"
 
 rq = RequestGenerator.RequestGenerator(authInfo)
 
