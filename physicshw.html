@@ -5,6 +5,7 @@
      th, td{ border: 1px solid gray; padding: 10px; }  
      h1{ text-align: center;} 
      table { width: 100%;}
+     body {background: #ececec; }
   </style> 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script type='text/javascript'>  
@@ -61,7 +62,7 @@
 
     </script>  
   </head>  
-<body align="center" bgcolor="#FAFAD2">
+<body align="center">
   <a href="https://general.physics.rutgers.edu/cgi/RUAssign.pl?204&semester=spring2015"><h1>Physics HW #2</h1></a>
   <input type = "text" id="problem#" onkeypress="if (window.event.keyCode==13) getProblem()" placeholder="Enter the problem #"></input>
 
@@ -124,21 +125,20 @@
   }
 
   function problem10(){
-    var x = prompt("Length x (in Meters): ");
-    var y = prompt("Length y (in Meters): ");
-    var v2 = k * (2.7)*Math.pow(10, -6)/x;
-    var v3 = k * (-3.3)*Math.pow(10, -6)/y;
-    return (v2 + v3) * (-6.1 * Math.pow(10, -6));
+    var r1 = prompt("R1: ");
+    var r2 = prompt("R2: ");
+    var r3 = prompt("R3: ")
+    var rA = (1.0 / ((1 / 9) + (1 / r3)));
+    var rB = (6 + r2);
+    var rC = (1.0 / ((1 / rA) + (1 / rB)));
+    return (1.0 / ((1 / 20) + (1 / (r1 + rC))));
   }
   
   function problem9(){
-    var x = prompt("Length x (in Meters): ");
-    var y = prompt("Length y (in Meters): ");
-    var d = Math.sqrt(((x/2)*(x/2)) + ((y/2)*(y/2)));
-    var v1 = k * (-6.1)*Math.pow(10, -6)/d;
-    var v2 = k * (2.7)*Math.pow(10, -6)/d;
-    var v3 = k * (-3.3)*Math.pow(10, -6)/d;
-    return v1 + v2 + v3;
+    var r1 = prompt("R1: ") * 1.0;
+    var r2 = prompt("R2: ") * 1.0;
+    var numer = ((r1*r2*12) + (310*r1) + (20*r2) + 1400) * 1.0;
+    return (numer / (310 + (12*r2)));
   }
   
   function problem8(){
