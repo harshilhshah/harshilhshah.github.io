@@ -138,20 +138,21 @@
   }
 
   function problem10(){
-    var r1 = prompt("R1: ");
-    var r2 = prompt("R2: ");
-    var r3 = prompt("R3: ");
-    var rA = (1.0 / ((1 / 9) + (1 / r3)));
-    var rB = (6 + r2);
-    var rC = (1.0 / ((1 / rA) + (1 / rB)));
-    return (1.0 / ((1 / 20) + (1 / (r1 + rC))));
+    var r1 = prompt("R1: ") * 1.0;
+    var r2 = prompt("R2: ") * 1.0;
+    var r3 = prompt("R3: ") * 1.0;
+    var rA = (9.0 * r3) / (9.0 + r3);
+    var rY = 6.0 + r2;
+    var rC = 1.0 / ((1 / rA) + (1 / rY));
+    var rZ = r1 + rC;
+    return 1.0 / ((1 / 20) + (1 / rZ));
   }
   
   function problem9(){
     var r1 = prompt("R1: ") * 1.0;
     var r2 = prompt("R2: ") * 1.0;
-    var rA = (1.0 / ((1 / 8) + (1 / (9 + r2))));
-    var rB = (1.0 / ((1 / 10) + (1 / (rB + 4))));
+    var rA = (72 + (8 * r2)) / (17 + r2);
+    var rB = (1 / ((1 / 10) + (1 / (rA + 4))));
     return rB + r1;
   }
   
@@ -176,7 +177,7 @@
     var y = prompt("Length y (in Meters): ");
     var q = 2.7 * Math.pow(10, -6);
     vA = ((k * (-6.1 * Math.pow(10, -6))) / x) + ((k * (-3.3 * Math.pow(10,-6))) / (Math.sqrt((x*x) + (y*y))));
-    return q * vA;
+    return -q * vA;
   }
 
   function toRadians (angle) {
