@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head><title>HWs</title>  
+  <style type='text/css'>  
+  th, td{ border: 1px solid gray; padding: 10px; }  
+  h1{ text-align: center;} 
+  table { width: 100%;}
+  </style> 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script type='text/javascript'>  
+
+    function top_stories(o){  
+      var items = o.query.results.body.table.tbody.tr[3].td[2].table.tbody.tr[0].td.table[2].tbody.tr[2].td.table.tbody.tr;
+      var output = '<table><th>HW #</th><th>Sections</th><th>Due date</th><th>HW problems</th>';  
+      var no_items=items.length;  
+      for(var i=1;i<no_items;i++){  
+        var weekNo = items[i].td[0].small.content;  
+        var section = items[i].td[2].small;
+        var due = items[i].td[3].small;
+        if(due != undefined) due = due.strong;
+        if(due instanceof Object) due = due.content + " " + due.font.content;
+        if(due == undefined) continue;
+        var hw = items[i].td[3].small.content;
+        if(hw == undefined) break;
+        output = "<table><th>HW #</th><th>Sections</th><th>Due date</th><th>HW problems</th><tr><td>" +  i + "</td><td>" + section + "</td><td>" + due + "</td><td style='color: blue'>" + hw + "</td></tr></table><hr/>";  
+      }
+      document.getElementById('results').innerHTML = output;    
+    }
+
+    function algoHW(o){
+      var cs344 = o.query.results.body.p.content;
+      var hwArr = cs344.split('HWK');
+      var count = hwArr.length;
+      document.getElementById('results2').innerHTML = hwArr[count - 1];
+    }  
+
+    function data101(o){
+      var hw = o.query.results.body.pre.content;
+      document.getElementById('results3').innerHTML = hw;
+    }
+
+    $.ajax({
+      type: 'GET',
+      url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fwww.cs.rutgers.edu%2Fcourses%2F213%2Fclasses%2Fspring_2015_venugopal%2Fassignments%2F%22%20and%20xpath%20%3D%20%22%2F%2Fli%5Blast()%5D%22&diagnostics=true",
+      dataType: 'html',
+      success: function(data) {
+        $('#cs213assign').append($(data).find('results'));
+      }
+    });
+
+    $.ajax({
+      type: 'GET',
+      url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fwww.cs.rutgers.edu%2Fcourses%2F213%2Fclasses%2Fspring_2015_venugopal%2Fproject%2F%22%20and%20xpath%20%3D%20%22%2F%2Fbody%2Fh3%5Blast()%5D%20%7C%20%2F%2Fbody%2F%2Ful%22&diagnostics=true",
+      dataType: 'html',
+      success: function(data) {
+        $('#cs213proj').append($(data).find('results'));
+      }
+    });
+
+    </script>  
+  </head>  
+  <body align="center" bgcolor="#FAFAD2">
+
+   <a href="http://math.rutgers.edu/~alexk/2015S348/syllabus.html"><h1>Crypto HW</h1></a>
+   <div id='results'></div> 
+   <a href="http://www.cs.rutgers.edu/~kalantar/index2015CS344Homework.html"><h1>Algo HW</h1></a>
+   <div id='results2'></div>
+   <hr>
+   <a href="http://www.cs.rutgers.edu/courses/213/classes/spring_2015_venugopal/"><h1>CS213 HW</h1></a>
+   <table>
+    <tr><th>Assignment</th><th>Project</th></tr>
+    <tr>  <td>
+      <div id = 'cs213assign'></div></td>
+      <td><div id ='cs213proj'></div>
+      </td></tr>
+    </table>
+    <h1>Data 101 HW</h1>
+    <div id = 'results3'></div>
+    <hr>
+
+    <!-- The YQL statment will be assigned to src. -->  
+    <script src='https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fmath.rutgers.edu%2F~alexk%2F2015S348%2Fsyllabus.html%22&format=json&diagnostics=true&callback=top_stories'></script>  
+    <script src="https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.cs.rutgers.edu%2F~kalantar%2Findex2015CS344Homework.html%22&format=json&diagnostics=true&callback=algoHW"></script>
+    <script src="https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22https%3A%2F%2Fsecure-gorge-6111.herokuapp.com%2F%22&format=json&diagnostics=true&callback=data101"></script>
+  </body>
+  </html>
+
+
