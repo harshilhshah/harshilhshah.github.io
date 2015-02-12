@@ -9,13 +9,15 @@
      */
  
     require "Services/Twilio.php";
+    require_once("secrets.php");
  
-    $AccountSid = "";
-    $AuthToken = "";
- 
+    $AccountSid = getSid();
+    $AuthToken = getToken();
     $client = new Services_Twilio($AccountSid, $AuthToken);
     	    
-    $name = "Harshil Shah";
+    $name = getName();
+    $number = getNumber();
+
     $BASE_URL = "https://query.yahooapis.com/v1/public/yql";  
     $yql_query = "select * from html where url='https://secure-gorge-6111.herokuapp.com'";  
     $yql_query_url = $BASE_URL . "?q=" . urlencode($yql_query) . "&format=json"; 
@@ -29,7 +31,7 @@
 
     $sms= $client->account->messages->sendMessage(
              "908-304-9250", 
- 	     "+1XXXXXXXXXX",
+ 	     "+1$number",
             "Hey $name!"
     );
 
