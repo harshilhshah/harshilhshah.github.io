@@ -29,7 +29,7 @@
     $phpObj =  json_decode($json);  
     echo $phpObj->query->results->body->pre->content;
 
-    $sms= $client->account->messages->sendMessage(
+   $sms= $client->account->messages->sendMessage(
              "908-304-9250", 
  	     "+1$number",
             "Hey $name!"
