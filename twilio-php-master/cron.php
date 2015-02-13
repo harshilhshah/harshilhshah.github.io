@@ -11,6 +11,7 @@
     require "Services/Twilio.php";
     require_once("secrets.php");
  
+ function giantMethod(){
     $AccountSid = getSid();
     $AuthToken = getToken();
     $client = new Services_Twilio($AccountSid, $AuthToken);
@@ -21,7 +22,7 @@
     $BASE_URL = "https://query.yahooapis.com/v1/public/yql";  
     $yql_query = "select * from html where url='https://secure-gorge-6111.herokuapp.com'";  
     $yql_query_url = $BASE_URL . "?q=" . urlencode($yql_query) . "&format=json"; 
-     
+
     $session = curl_init($yql_query_url);  
     curl_setopt($session, CURLOPT_RETURNTRANSFER,true);  
     $json = curl_exec($session);  
@@ -36,4 +37,4 @@
     );
 
     echo "Sent message to $name \n";
-	
+}
