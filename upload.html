@@ -52,7 +52,7 @@
       url: sURL,
       dataType: 'html',
       success: function(data) {
-        var result = $(data).find('results');
+        var result = $(data).find('p');
         window.open(result.text(),'_self');
       }
     });
