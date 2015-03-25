@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>  
+<script>
+
+function startProblem(uI,vals){
+  if(uI == 1) return problem1(vals); 
+  else if(uI == 2) return problem2(vals); 
+  else if(uI == 3) return problem3(vals);
+  else if(uI == 4) return problem4(vals);
+  else if(uI == 5) return problem5(vals);
+  else if(uI == 6) return problem6(vals);
+  else if(uI == 7) return problem7(vals);
+  else if(uI == 8) return problem8(vals);
+  else if(uI == 9) return problem9(vals);
+  else if(uI == 10) return problem10(vals);
+  return "You're a fucking idiot. Try Again.";
+}
+
+function findf(di, dO){
+  return 1.0 / ((1.0 / dO) + (1.0 / di));
+}
+
+function problem1(vals){
+  var di = -1.0 * (vals[0] - vals[1]);
+  return findf(vals[0], di);;
+}
+
+function problem2(vals){
+  var x = vals[0];
+  var y = vals[1];
+  var z = (x * y) / (2.1 + x);
+  return (Math.sqrt((x * x) + (z * z)) + Math.sqrt(Math.pow(y-z,2) + (2.1 * 2.1)));
+}
+
+function problem3(vals){
+  var f = findf(vals[0], -vals[1]);
+  var magi = (vals[1] / vals[0]);
+  var magf = magi / 2.0;
+  return (1.0 - (1.0 / magf)) * f;
+}
+
+function problem4(vals){
+  return -2 * vals[0];
+}
+
+function problem5(vals){
+  var di = 1.0 / ((1.0 / vals[1]) - (1.0 / vals[0]));
+  var mag = -di / vals[0];
+  return vals[2] * mag;
+}
+
+function problem6(vals){  
+  return findf(vals[1],-vals[0]);
+}
+
+function problem7(vals){
+  var d0 = findf(vals[0], -vals[1]);
+  return -vals[1] / d0;
+}
+
+function problem8(vals){
+  var di = -2 * vals[0];
+  return findf(di, vals[0]);
+}
+
+function problem9(vals){
+  var m = prompt("Enter the factor. Enter the negative sign if you have real image.");
+  return 0.5 * vals[0] * (1 + (1 / m));
+}
+
+function problem10(vals){
+  var m = prompt("What is the magnitude value in decimals.");
+  return 0.5 * vals[0] * (1 + (1 / m));
+}
+
+function toDegrees (angle) {
+  return angle * (180 / Math.PI);
+}
+
+function toRadians (angle) {
+  return angle * (Math.PI / 180);
+}
+
+function parser() {
+    var fileDisplayArea = document.getElementById('fileDisplayArea');
+    fileDisplayArea.innerText = "";
+    var strToBeParsed = document.getElementById('txtar').value;
+    var queArr = strToBeParsed.split('\n');
+    for (sSub in queArr) {
+          if(queArr[sSub].length < 50) {continue};
+          sSub = parseInt(sSub);
+          var strVals = queArr[sSub].match(/[-+]?\d[\.\d]*/g);
+          if (strVals === null) {break};
+          var queString = strVals.splice(0,1).toString();
+          var queNum = parseInt(queString.substr(0,queString.length - 1));
+          var strVals = queArr[sSub].match(/\s[-+]?\d[\.\d]*/g);
+          var numVals = [];
+          for(i in strVals){
+            if (strVals[i] != '.') {
+                //fileDisplayArea.innerText += strVals[i] + " ";
+               numVals.push(parseFloat(strVals[i]));
+            };
+          };
+          fileDisplayArea.innerText += queNum + ') ' + startProblem(queNum,numVals) + '\n';
+    };
+}
+
+/*window.onload = function()  {
+    var fileInput = document.getElementById('fileInput');
+    var fileDisplayArea = document.getElementById('fileDisplayArea');
+
+    fileInput.addEventListener('change', function(e) {
+      var file = fileInput.files[0];
+      var textType = /text.*/   /*;
+
+      if (file.type.match(textType)) {
+
+       var reader = new FileReader();
+       
+       reader.onload = function(e) {
+        fileDisplayArea.innerText = "";
+        var str = reader.result;
+        var strArr = str.split('\n');
+        for (sSub in strArr) {
+          sSub = parseInt(sSub);
+          var strVals = strArr[sSub].split(' ');
+          for(i in strVals){strVals[i] = parseFloat(strVals[i])};
+          fileDisplayArea.innerText += (sSub + 1) + ") " + startProblem((sSub+1),strVals) + '\n';
+          if(sSub == 9) break;
+        };
+       }
+
+       reader.readAsText(file);  
+
+      } else {
+        fileDisplayArea.innerText = "File not supported!";
+      }
+    });
+}*/
+</script>
+
+<body bgcolor="#FAFAD2">
+  <h1 align="center" >Physics HW #6</h1>
+  <p>Copy the questions from the online page and paste it here.</p>
+  <table id="page-wrapper" cellspacing="20">
+    <!--<div> Select a text file: 
+      <input type="file" id="fileInput">
+    </div>-->
+      <td><textarea id="txtar" rows="10" cols="50" oninput="parser()"></textarea></td>
+      <td><pre id="fileDisplayArea"></pre></td> 
+  </table>
+</body>
+</html>
