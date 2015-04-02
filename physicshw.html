@@ -21,56 +21,61 @@ function findf(di, dO){
 }
 
 function problem1(vals){
-  var di = -1.0 * (vals[0] - vals[1]);
-  return findf(vals[0], di);;
+  var di = findf(vals[0],-vals[1]);
+  var do2 = Math.abs(di - vals[2]);
+  var f2 = prompt("1) Enter value for f2, include - sign")*1.0;
+  return findf(f2, -do2);
 }
 
 function problem2(vals){
-  var x = vals[0];
-  var y = vals[1];
-  var z = (x * y) / (2.1 + x);
-  return (Math.sqrt((x * x) + (z * z)) + Math.sqrt(Math.pow(y-z,2) + (2.1 * 2.1)));
+  return toDegrees(Math.acos(Math.sin(toRadians(vals[0]))/vals[1]));
 }
 
 function problem3(vals){
-  var f = findf(vals[0], -vals[1]);
-  var magi = (vals[1] / vals[0]);
-  var magf = magi / 2.0;
-  return (1.0 - (1.0 / magf)) * f;
+  var critical = toDegrees(Math.asin(1.0 / 1.33));
+  var r = Math.tan(toRadians(critical)) * vals[0];
+  return 2 * r;
 }
 
 function problem4(vals){
-  return -2 * vals[0];
+  return 1.0 / ((1.0 / vals[0]) - (1.0/ vals[1]));
 }
 
 function problem5(vals){
-  var di = 1.0 / ((1.0 / vals[1]) - (1.0 / vals[0]));
-  var mag = -di / vals[0];
-  return vals[2] * mag;
+  var di = (0.035 * vals[1]) / vals[0];
+  return (findf(vals[1],di)*100).toString() + ". This program assumes that you had a frame of film (35 mm)." ;
 }
 
 function problem6(vals){  
-  return findf(vals[1],-vals[0]);
+  var di = (vals[0] - vals[2]) / 100;
+  var dObj = (vals[1] - vals[2]) / 100;
+  return (1.0 / findf(-di,dObj));
 }
 
 function problem7(vals){
-  var d0 = findf(vals[0], -vals[1]);
-  return -vals[1] / d0;
+  var d0 = vals[2] - vals[1];
+  var di = 1.0 / (vals[0] - (1.0 / d0));
+  var di2 = -(Math.abs(di) + vals[1]);
+  var d02 = d0 + vals[1];
+  return (1.0 / di2) + (1.0 / d02);
 }
 
 function problem8(vals){
-  var di = -2 * vals[0];
-  return findf(di, vals[0]);
+  var d02 = vals[0];
+  var di1 = vals[2] - vals[0];
+  return 1.0 / ((1.0/vals[1]) - (1.0 / di1));
 }
 
 function problem9(vals){
-  var m = prompt("Enter the factor. Enter the negative sign if you have real image.");
-  return 0.5 * vals[0] * (1 + (1 / m));
+  var d = vals[0] / 100;
+  var overX = 1.0 / (2 - (1.0 / d));
+  var n = overX - 0.5;
+  return 1.0 / ((1.0/n)-5);
 }
 
 function problem10(vals){
-  var m = prompt("What is the magnitude value in decimals.");
-  return 0.5 * vals[0] * (1 + (1 / m));
+  var di = Math.abs(findf(-vals[2],vals[1]));
+  return 1.0 / ((1.0 / vals[1]) - (1.0/(di+vals[0])));
 }
 
 function toDegrees (angle) {
@@ -93,7 +98,7 @@ function parser() {
           if (strVals === null) {break};
           var queString = strVals.splice(0,1).toString();
           var queNum = parseInt(queString.substr(0,queString.length - 1));
-          var strVals = queArr[sSub].match(/\s[-+]?\d[\.\d]*/g);
+          var strVals = queArr[sSub].match(/\s[-|+]?\d[\.\d]*/g);
           var numVals = [];
           for(i in strVals){
             if (strVals[i] != '.') {
