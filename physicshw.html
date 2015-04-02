@@ -21,10 +21,10 @@ function findf(di, dO){
 }
 
 function problem1(vals){
-  var di = findf(vals[0],-vals[1]);
-  var do2 = Math.abs(di - vals[2]);
+  var di = findf(vals[0],-vals[2]);
+  var do2 = Math.abs(di - vals[1]);
   var f2 = prompt("1) Enter value for f2, include - sign")*1.0;
-  return findf(f2, -do2);
+  return findf(f2, do2);
 }
 
 function problem2(vals){
@@ -70,7 +70,7 @@ function problem9(vals){
   var d = vals[0] / 100;
   var overX = 1.0 / (2 - (1.0 / d));
   var n = overX - 0.5;
-  return 1.0 / ((1.0/n)-5);
+  return (1.0 / ((1.0/n)-5)) * 100;
 }
 
 function problem10(vals){
