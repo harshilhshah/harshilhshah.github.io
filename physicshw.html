@@ -27,11 +27,11 @@ function problem2(vals){
 }
 
 function problem3(vals){
-  return (vals[2] / (2 * vals[0])) / 100;
+  return (vals[2] / (2 * vals[0])) ;
 }
 
 function problem4(vals){
-  return (vals[2] / (4 * vals[0])) / 100;
+  return (vals[2] / (4 * vals[0]));
 }
 
 function problem5(vals){
@@ -57,7 +57,7 @@ function problem8(vals){
 }
 
 function problem9(vals){
-  return Math.floor((vals[1] * Math.pow(10,-9))/(vals[0] * Math.pow(10,-6))) * 2.0;
+  return Math.floor((vals[1] * Math.pow(10, -6))/ (vals[0] * Math.pow(10, -9))) * 2.0;
 }
 
 function problem10(vals){
@@ -133,6 +133,7 @@ function parser() {
 <body bgcolor="#FAFAD2">
   <h1 align="center" >Physics HW #10</h1>
   <p>Copy the questions from the online page and paste it here.</p>
+  <h4>For 9 and 10 to work remove the line in 8 that starts with "Hint ....."</h4>
   <table id="page-wrapper" cellspacing="20">
     <!--<div> Select a text file: 
       <input type="file" id="fileInput">
