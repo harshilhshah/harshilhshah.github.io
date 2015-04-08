@@ -19,7 +19,7 @@ function startProblem(uI,vals){
 function problem1(vals){
   var lambda = vals[0] * Math.pow(10, -9);
   var l = vals[1];
-  return lambda * (l / (5.75 * Math.pow(10, -3)))  / 100;
+  return (lambda * (l / (5.75 * Math.pow(10, -3))))  / Math.pow(10,-6);
 }
 
 function problem2(vals){
@@ -27,11 +27,11 @@ function problem2(vals){
 }
 
 function problem3(vals){
-  return (vals[2] * Math.pow(10, -9) / (2 * vals[0])) / 100;
+  return (vals[2] / (2 * vals[0])) / 100;
 }
 
 function problem4(vals){
-  return (vals[2] * Math.pow(10, -9) / (4 * vals[0])) / 100;
+  return (vals[2] / (4 * vals[0])) / 100;
 }
 
 function problem5(vals){
@@ -53,11 +53,11 @@ function problem8(vals){
   var lambda = vals[1] * Math.pow(10,-9);
   var l = vals[2] * Math.pow(10,-3);
   var n = vals[3];
-  return 2 * l * Math.tan(Math.asin((1.22*lambda)/(n*diameter)));
+  return 2 * l * Math.tan(Math.asin((1.22*lambda)/(n*diameter))) * Math.pow(10,6);
 }
 
 function problem9(vals){
-  return Math.floor(vals[1]/vals[0]) * 2.0;
+  return Math.floor((vals[1] * Math.pow(10,-9)/(vals[0] * Math.pow(10,-6))) * 2.0;
 }
 
 function problem10(vals){
