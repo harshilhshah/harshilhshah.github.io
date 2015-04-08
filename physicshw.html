@@ -16,66 +16,52 @@ function startProblem(uI,vals){
   return "You're a fucking idiot. Try Again.";
 }
 
-function findf(di, dO){
-  return 1.0 / ((1.0 / dO) + (1.0 / di));
-}
-
 function problem1(vals){
-  var di = findf(vals[0],-vals[2]);
-  var do2 = Math.abs(di - vals[1]);
-  var f2 = prompt("1) Enter value for f2, include - sign")*1.0;
-  return findf(f2, do2);
+  var lambda = vals[0] * Math.pow(10, -9);
+  var l = vals[1];
+  return lambda * (l / (5.75 * Math.pow(10, -3)))  / 100;
 }
 
 function problem2(vals){
-  return toDegrees(Math.acos(Math.sin(toRadians(vals[0]))/vals[1]));
+  return vals[0] * vals[1] * Math.pow(10,-3) / (vals[2] * Math.pow(10, -9));
 }
 
 function problem3(vals){
-  var critical = toDegrees(Math.asin(1.0 / 1.33));
-  var r = Math.tan(toRadians(critical)) * vals[0];
-  return 2 * r;
+  return (vals[2] * Math.pow(10, -9) / (2 * vals[0])) / 100;
 }
 
 function problem4(vals){
-  return 1.0 / ((1.0 / vals[0]) - (1.0/ vals[1]));
+  return (vals[2] * Math.pow(10, -9) / (4 * vals[0])) / 100;
 }
 
 function problem5(vals){
-  var di = (0.035 * vals[1]) / vals[0];
-  return (findf(vals[1],di)*100).toString() + ". This program assumes that you had a frame of film (35 mm)." ;
+  return vals[0] / (((3.8 / 100)/ vals[1])*1000);
 }
 
-function problem6(vals){  
-  var di = (vals[0] - vals[2]) / 100;
-  var dObj = (vals[1] - vals[2]) / 100;
-  return (1.0 / findf(-di,dObj));
+function problem6(vals){ 
+  var first = (2*vals[1]*Math.pow(10,-9))/(0.01/vals[0]);
+  var second = (2*vals[2]*Math.pow(10,-9))/(0.01/vals[0]);
+  return toDegrees(Math.asin(first)) - toDegrees(Math.asin(second));
 }
 
 function problem7(vals){
-  var d0 = vals[2] - vals[1];
-  var di = 1.0 / (vals[0] - (1.0 / d0));
-  var di2 = -(Math.abs(di) + vals[1]);
-  var d02 = d0 + vals[1];
-  return (1.0 / di2) + (1.0 / d02);
+  return "I ain't your slave. Do it on your own";
 }
 
 function problem8(vals){
-  var d02 = vals[0];
-  var di1 = vals[2] - vals[0];
-  return 1.0 / ((1.0/vals[1]) - (1.0 / di1));
+  var diameter = vals[0] * Math.pow(10,-3);
+  var lambda = vals[1] * Math.pow(10,-9);
+  var l = vals[2] * Math.pow(10,-3);
+  var n = vals[3];
+  return 2 * l * Math.tan(Math.asin((1.22*lambda)/(n*diameter)));
 }
 
 function problem9(vals){
-  var d = vals[0] / 100;
-  var overX = 1.0 / (2 - (1.0 / d));
-  var n = overX - 0.5;
-  return (1.0 / ((1.0/n)-5)) * 100;
+  return Math.floor(vals[1]/vals[0]) * 2.0;
 }
 
 function problem10(vals){
-  var di = Math.abs(findf(-vals[2],vals[1]));
-  return 1.0 / ((1.0 / vals[1]) - (1.0/(di+vals[0])));
+  return vals[1] / (2*vals[2]);
 }
 
 function toDegrees (angle) {
@@ -145,7 +131,7 @@ function parser() {
 </script>
 
 <body bgcolor="#FAFAD2">
-  <h1 align="center" >Physics HW #6</h1>
+  <h1 align="center" >Physics HW #10</h1>
   <p>Copy the questions from the online page and paste it here.</p>
   <table id="page-wrapper" cellspacing="20">
     <!--<div> Select a text file: 
