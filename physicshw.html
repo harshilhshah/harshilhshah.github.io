@@ -39,13 +39,16 @@ function problem5(vals){
 }
 
 function problem6(vals){ 
-  var first = (2*vals[1]*Math.pow(10,-9))/(0.01/vals[0]);
-  var second = (2*vals[2]*Math.pow(10,-9))/(0.01/vals[0]);
+  var ord = prompt("For 6, What was your order (not food you dumbass)");
+  var first = (ord*vals[1]*Math.pow(10,-9))/(0.01/vals[0]);
+  var second = (ord*vals[2]*Math.pow(10,-9))/(0.01/vals[0]);
   return toDegrees(Math.asin(first)) - toDegrees(Math.asin(second));
 }
 
 function problem7(vals){
-  return "I ain't your slave. Do it on your own. Just do 1 * 10 ^-3 / number of lines / smaller lambda and then round it. Now take care of your own shit.";
+  var numlines = prompt("For 7, Enter number of lines:") * 1.0;
+  var lambda = prompt("For 7, Enter smaller wavelength value") * 1.0;
+  return Math.floor((0.001 / numlines) / lambda);
 }
 
 function problem8(vals){
