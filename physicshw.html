@@ -17,52 +17,64 @@ function startProblem(uI,vals){
 }
 
 function problem1(vals){
-  var lambda = vals[0] * Math.pow(10, -9);
-  var l = vals[1];
-  return (lambda * (l / (5.75 * Math.pow(10, -3))))  / Math.pow(10,-6);
+  var v = vals[1];
+  return Math.abs(vals[2] - (vals[0]*Math.sqrt(1-(v*v))));
 }
 
 function problem2(vals){
-  return vals[0] * vals[1] * Math.pow(10,-3) / (vals[2] * Math.pow(10, -9));
+  var f = vals[0];
+  return Math.sqrt(1 - Math.pow(1.0 / f,2));
 }
 
 function problem3(vals){
-  return (vals[2] / (2 * vals[0])) ;
+  var vst = vals[0];
+  var vtr = vals[1];
+  return  (vst + vtr)/(1.0 + (vst*vtr));
 }
 
 function problem4(vals){
-  return (vals[2] / (4 * vals[0]));
+  var y = vals[1];
+  var x = vals[0];
+  return Math.sqrt(1.0 - Math.pow(y/x,2));
 }
 
 function problem5(vals){
-  return vals[0] / (((3.8 / 100)/ vals[1])*1000);
+  var vae = vals[0];
+  var vba = vals[1];
+  return (vae - vba) / (1.0 - (vba*vae));
 }
 
 function problem6(vals){ 
-  var ord = prompt("For 6, What was your order (not food you dumbass)");
-  var first = (ord*vals[1]*Math.pow(10,-9))/(0.01/vals[0]);
-  var second = (ord*vals[2]*Math.pow(10,-9))/(0.01/vals[0]);
-  return toDegrees(Math.asin(first)) - toDegrees(Math.asin(second));
+  var m = 1.67262178 * Math.pow(10,-27);
+  var c = 299792458;
+  var v = vals[0];
+  return m * c * c * ((1.0/(Math.sqrt(1.0 - (v*v)))) - 1.0);
 }
 
 function problem7(vals){
-  return "FUCK YOU!!";
+  var ke = vals[2] * Math.pow(10,vals[3]%100);
+  var m = vals[0] * Math.pow(10,(vals[1]%100));
+  var c = 299792458;
+  return Math.sqrt(1 - Math.pow((1.0/((ke/(m*c*c)) + 1.0)),2));
 }
 
 function problem8(vals){
-  var diameter = vals[0] * Math.pow(10,-3);
-  var lambda = vals[1] * Math.pow(10,-9);
-  var l = vals[2] * Math.pow(10,-3);
-  var n = vals[3];
-  return 2 * l * Math.tan(Math.asin((1.22*lambda)/(n*diameter))) * Math.pow(10,6);
+  var p = vals[0] * 1000;
+  return (p*Math.pow(10,13)*3.16) / Math.pow(3.0 * Math.pow(10,8),2);
 }
 
 function problem9(vals){
-  return Math.floor((vals[1] * Math.pow(10, -6))/ (vals[0] * Math.pow(10, -9))) * 2.0;
+  var m = vals[3] * Math.pow(10,-6);
+  var mi = vals[2];
+  var j = vals[0] * Math.pow(10,vals[1]%100);
+  return (mi / j) * m * Math.pow(10,16) * 9.0;
 }
 
 function problem10(vals){
-  return vals[1] / (2*vals[2]);
+  var l = vals[0];
+  var d = vals[1];
+  var v = vals[2];
+  return Math.sqrt(Math.pow(d*Math.sqrt(1.0-(v*v)),2) + ((l*l)-(d*d)));
 }
 
 function toDegrees (angle) {
@@ -132,13 +144,9 @@ function parser() {
 </script>
 
 <body bgcolor="#FAFAD2">
-  <h1 align="center" >Physics HW #10</h1>
-  <p>Copy the questions from the online page and paste it here.</p>
-  <h4>For 9 and 10 to work remove the line in 8 that starts with "Hint ....."</h4>
+  <h1 align="center" >Physics HW #11</h1>
+  <p>You should know how things work by now. </p>
   <table id="page-wrapper" cellspacing="20">
-    <!--<div> Select a text file: 
-      <input type="file" id="fileInput">
-    </div>-->
       <td><textarea id="txtar" rows="10" cols="50" oninput="parser()"></textarea></td>
       <td><pre id="fileDisplayArea"></pre></td> 
   </table>
