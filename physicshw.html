@@ -16,65 +16,58 @@ function startProblem(uI,vals){
   return "You're a fucking idiot. Try Again.";
 }
 
+var h = 6.626 * Math.pow(10, -34);
+var c = 3.0 * Math.pow(10,8);
+var me = 9.1 * Math.pow(10,-31);
+var mp = 1.672 * Math.pow(10,-27);
+
 function problem1(vals){
-  var v = vals[1];
-  return Math.abs(vals[2] - (vals[0]*Math.sqrt(1-(v*v))));
+  var wo = vals[1] - (vals[0] * 2);
+  return wo;
 }
 
 function problem2(vals){
-  var f = vals[0];
-  return Math.sqrt(1 - Math.pow(1.0 / f,2));
+  return vals[0] - 1.024;
 }
 
 function problem3(vals){
-  var vst = vals[0];
-  var vtr = vals[1];
-  return  (vst + vtr)/(1.0 + (vst*vtr));
+  var w = (h * c / (vals[1] * Math.pow(10,-9)))/(1.6 * Math.pow(10,-19));
+  return w - vals[0];
 }
 
 function problem4(vals){
-  var y = vals[1];
-  var x = vals[0];
-  return Math.sqrt(1.0 - Math.pow(y/x,2));
+  var freq = h * vals[0] * Math.pow(10, 15);
+  var x = freq / (1.6 * Math.pow(10,-19));
+  return x - vals[2];
 }
 
 function problem5(vals){
-  var vae = vals[0];
-  var vba = vals[1];
-  return (vae - vba) / (1.0 - (vba*vae));
+  var den = (vals[2] * Math.pow(10,-2) * vals[0] * Math.pow(10,-25) * 4 * Math.PI);
+  return (h / den) * Math.pow(10,9);
 }
 
 function problem6(vals){ 
-  var m = 1.67262178 * Math.pow(10,-27);
-  var c = 299792458;
-  var v = vals[0];
-  return m * c * c * ((1.0/(Math.sqrt(1.0 - (v*v)))) - 1.0);
+  var wo = vals[2] * 1.6 * Math.pow(10,-19);
+  return ((h * Math.pow(10,9)) / (me * Math.sqrt(2*((vals[0]*Math.pow(10,15)*h) - wo) / me)));
 }
 
 function problem7(vals){
-  var ke = vals[2] * Math.pow(10,vals[3]%100);
-  var m = vals[0] * Math.pow(10,(vals[1]%100));
-  var c = 299792458;
-  return Math.sqrt(1 - Math.pow((1.0/((ke/(m*c*c)) + 1.0)),2));
+  return (vals[0] + vals[1] - vals[2]);
 }
 
 function problem8(vals){
-  var p = vals[0] * 1000;
-  return (p*Math.pow(10,13)*3.1536) / Math.pow(3.0 * Math.pow(10,8),2);
+  return me * vals[0] * Math.pow(10,6) / mp;
 }
 
 function problem9(vals){
-  var m = vals[3] * Math.pow(10,-6);
-  var mi = vals[2];
-  var j = vals[0] * Math.pow(10,vals[1]%100);
-  return (mi / j) * m * Math.pow(10,16) * 9.0;
+  var k = 8.99 * Math.pow(10,9);
+  var q1 = vals[1] * Math.pow(10,-6);
+  var qe = 1.6 * Math.pow(10,-19);
+  return (h*c*Math.pow(10,9))/ (k*q1*qe*((1.0/vals[0])-(1.0/vals[2])));
 }
 
 function problem10(vals){
-  var l = vals[0];
-  var d = vals[1];
-  var v = vals[2];
-  return Math.sqrt(Math.pow(d*Math.sqrt(1.0-(v*v)),2) + ((l*l)-(d*d)));
+  return h / (me * Math.sqrt(2*1.6*Math.pow(10,-19)*vals[0]/me));
 }
 
 function toDegrees (angle) {
@@ -144,12 +137,10 @@ function parser() {
 </script>
 
 <body bgcolor="#FAFAD2">
-  <h1 align="center" >Physics HW #11</h1>
-  <p>You should know how things work by now. </p>
+  <h1 align="center" >Physics HW #12</h1>
   <table id="page-wrapper" cellspacing="20">
       <td><textarea id="txtar" rows="10" cols="50" oninput="parser()"></textarea></td>
       <td><pre id="fileDisplayArea"></pre></td> 
-      <td><img src='http://www.memecreator.org/static/images/memes/32035.jpg'></td>
   </table>
 </body>
 </html>
