@@ -59,7 +59,9 @@ function problem7(vals){
 }
 
 function problem8(vals){
-  return "This is the formula: 436400 / ((v*v) - Math.pow(f*v,2)), v is the velocity and f is the factor.";
+  var v = vals[0] * Math.pow(10,6);
+  var f = prompt("Enter the factor in decimal.") * 1.0;
+  return 436400 / ((v*v) - Math.pow(f*v,2));
 }
 
 function problem9(vals){
