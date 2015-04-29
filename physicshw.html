@@ -19,55 +19,89 @@ function startProblem(uI,vals){
 var h = 6.626 * Math.pow(10, -34);
 var c = 3.0 * Math.pow(10,8);
 var me = 9.1 * Math.pow(10,-31);
+var qe = 1.6 * Math.pow(10,-19);
 var mp = 1.672 * Math.pow(10,-27);
 
 function problem1(vals){
-  var wo = vals[1] - (vals[0] * 2);
-  return wo;
+  return 13.6 * (1.0/(vals[0]*vals[0]));
 }
 
 function problem2(vals){
-  return vals[0] - 1.024;
+  var lambda = vals[0] * Math.pow(10,-9);
+  return (h*c) / (lambda*qe);
 }
 
 function problem3(vals){
-  var w = (h * c / (vals[1] * Math.pow(10,-9)))/(1.6 * Math.pow(10,-19));
-  return w - vals[0];
+  return "We shall never meet after today, so I will leave this to you. :) "
 }
 
 function problem4(vals){
-  var freq = h * vals[0] * Math.pow(10, 15);
-  var x = freq / (1.6 * Math.pow(10,-19));
-  return x - vals[2];
+  var lambdali = vals[2];
+  var zli = vals[0];
+  var zb = vals[1];
+  return lambdali*zli*zli/(zb*zb);
 }
 
 function problem5(vals){
-  var den = (vals[2] * Math.pow(10,-2) * vals[0] * Math.pow(10,-25) * 4 * Math.PI);
-  return (h / den) * Math.pow(10,9);
+  var ni = vals[0];
+  var nf = vals[1];
+  return -13.6 * ((1.0/(nf*nf))-(1.0/(ni*ni)));
 }
 
 function problem6(vals){ 
-  var wo = vals[2] * 1.6 * Math.pow(10,-19);
-  return ((h * Math.pow(10,9)) / (me * Math.sqrt(2*((vals[0]*Math.pow(10,15)*h) - wo) / me)));
+  return choose(vals[0],2);
 }
 
 function problem7(vals){
-  return (vals[0] + vals[1] - vals[2]);
+  var ro = vals[2] * Math.pow(10,-11);
+  var rn = vals[0] * Math.pow(10,-15);
+  return 0.99945478843577 * (ro*ro*ro) / (rn*rn*rn);
 }
 
 function problem8(vals){
-  return me * vals[0] * Math.pow(10,6) / mp;
+  return "This is the formula: 436400 / ((v*v) - Math.pow(f*v,2)), v is the velocity and f is the factor.";
 }
 
 function problem9(vals){
-  var k = 8.99 * Math.pow(10,9);
-  var q1 = vals[1] * Math.pow(10,-6);
-  var qe = 1.6 * Math.pow(10,-19);
-  return (h*c*Math.pow(10,9))/ (k*q1*qe*((1.0/vals[0])-(1.0/vals[2])));
+  var n = vals[2];
+  var z = Math.sqrt(vals[1]*vals[0]*vals[0]/-13.6);
+  return 5.29 * Math.pow(10,-11) * (n*n/z);
 }
 
 function problem10(vals){
-  return h / (me * Math.sqrt(2*1.6*Math.pow(10,-19)*vals[0]/me));
+  var n = vals[0];
+  var r = 1.097 * Math.pow(10,-2);
+  var z = 1;
+  return -1.0/(r*z*((1.0/Math.pow(n+1,2))-(1.0/(n*n))));
+}
+
+function factorial(x){
+    x = parseInt(x, 10);
+    if (isNaN(x)) return 1;
+    
+    if (x <= 0) return 1;
+    // if x above 170, return infinity
+    if (x > 170) return Infinity;
+    // calculating the factorial
+    var y = 1;
+    for (var i = x; i>0; i--){
+        y *= i;
+    }
+    return y;
+}
+
+function choose(n, k){
+    // validating the input
+    n = parseInt(n, 10);
+    if (isNaN(n)) n = 0;
+    if (n < 0) n = 0;
+    
+    k = parseInt(k, 10);
+    if (isNaN(k)) k = 0;
+    if (k < 0) k = 0;
+    if (k > n) k = n;
+    
+    return (factorial(n)) / (factorial(k) * factorial(n - k));
 }
 
 function toDegrees (angle) {
@@ -137,7 +171,7 @@ function parser() {
 </script>
 
 <body bgcolor="#FAFAD2">
-  <h1 align="center" >Physics HW #12</h1>
+  <h1 align="center" >Physics HW #13</h1>
   <table id="page-wrapper" cellspacing="20">
       <td><textarea id="txtar" rows="10" cols="50" oninput="parser()"></textarea></td>
       <td><pre id="fileDisplayArea"></pre></td> 
