@@ -13,100 +13,95 @@ function startProblem(uI,vals){
   else if(uI == 8) return problem8(vals);
   else if(uI == 9) return problem9(vals);
   else if(uI == 10) return problem10(vals);
-  return "You're a fucking idiot. Try Again.";
+  return "Invalid question number.";
 }
 
-var h = 6.626 * Math.pow(10, -34);
 var c = 3.0 * Math.pow(10,8);
-var me = 9.1 * Math.pow(10,-31);
-var qe = 1.6 * Math.pow(10,-19);
-var mp = 1.672 * Math.pow(10,-27);
+var avagadro = 6.02 * Math.pow(10,23);
+var me = 0.00055;
+var mp = 1.007276;
+var mn = 1.008665;
+var MeV = 931.5;
 
 function problem1(vals){
-  return 13.6 * (1.0/(vals[0]*vals[0]));
+  var amass = prompt("1. Enter atomic mass for your element")*1.0;
+  var anum = prompt("1. Enter the atomic number for your element")*1.0;
+  var elementNum = prompt("1. Enter the number thats on left of your element in the question")*1.0;
+  var mOfnucleus = amass - (anum*me);
+  var mOfnucleon = (anum * mp) + ((elementNum - anum)*mn);
+  var deltaM = mOfnucleon - mOfnucleus;
+  return deltaM * MeV;
 }
 
 function problem2(vals){
-  var lambda = vals[0] * Math.pow(10,-9);
-  return (h*c) / (lambda*qe);
+  var amass = prompt("2. Enter atomic mass for your element")*1.0;
+  var anum = prompt("2. Enter the atomic number for your element")*1.0;
+  var elementNum = prompt("2. Enter the number thats on left of your element in the question")*1.0;
+  var mOfnucleus = amass - (anum*me);
+  var mOfnucleon = (anum * mp) + ((elementNum - anum)*mn);
+  var deltaM = mOfnucleon - mOfnucleus;
+  return (deltaM * MeV) / elementNum;
 }
 
 function problem3(vals){
-  var x = prompt("3) enter the atomic value.");
-  return h*c/(2.18*Math.pow(10,-18)*x*x*(1.0 - (1.0/9.0)));
-  //return "We shall never meet after today, so I will leave this to you. :) "
+  var t12 = prompt("3. Half life in hours") * 3600;
+  var a0 = prompt("3. Activity when it was prepared") * 1.0;
+  var t = prompt("3. How long was it injected (in h)") * 3600;
+  var lambda = Math.log(2.0) / t12;
+  return a0 * Math.pow(Math.E,-lambda*t);
 }
 
 function problem4(vals){
-  var lambdali = vals[2];
-  var zli = vals[0];
-  var zb = vals[1];
-  return lambdali*zli*zli/(zb*zb);
+  var mOfC = prompt("Mass of pure carbon")*1.0;
+  var activity = prompt("enter activity")*1.0;
+  var ratio = prompt("Enter ratio, the number before x 10^-12")*Math.pow(10,-12);
+  var lambda = Math.log(2) / (5700 * 3600 * 24 * 365);
+  var numOfmolec = mOfC / 12 * avagadro * ratio;
+  var numOfmolec2 = activity / lambda;
+  return (Math.log(numOfmolec2 / numOfmolec) / -lambda) / (3600*365*24);
 }
 
 function problem5(vals){
-  var ni = vals[0];
-  var nf = vals[1];
-  return -13.6 * ((1.0/(nf*nf))-(1.0/(ni*ni)));
+  var t12 = prompt("5. Enter half-life")*24*3600;
+  var activity = prompt("5. Enter activity")*3.7*Math.pow(10,10);
+  var lambda = Math.log(2) / (t12);
+  var n = activity / lambda;
+  return n * 1000 * 197.968 / (6.023 * Math.pow(10,23));
 }
 
 function problem6(vals){ 
-  return choose(vals[0],2);
+  var power = prompt("6. Enter power") * 1.0;
+  var n = (power * 365 * 24 * 3600) / (200 * 1.6 * Math.pow(10,-13));
+  return (n*235)/avagadro;
 }
 
 function problem7(vals){
-  var ro = vals[2] * Math.pow(10,-11);
-  var rn = vals[0] * Math.pow(10,-15);
-  return 0.99945478843577 * (ro*ro*ro) / (rn*rn*rn);
+  var am1 = prompt("Atomic mass of first element in product") *1.0;
+  var anum1 = prompt("atomic number of first element in product")*1.0;
+  var am2 = prompt("Atomic mass of second element in product") *1.0;
+  var anum2 = prompt("atomic number of the second element in product")*1.0;
+  var n = prompt("Enter number of neutrons")*1.0;
+  var massOfRc = mn + 235.0439299 -(92*me);
+  var massOfPr = am1 - (anum1*me) + am2 - (anum2*me) + (n*mn);
+  return (massOfRc - massOfPr) * 931.5;
 }
 
 function problem8(vals){
-  var v = vals[0] * Math.pow(10,6);
-  var f = prompt("For 8) Enter the factor in decimal.") * 1.0;
-  return h*c/(0.5*me*((v*v)-Math.pow(f*v,2)));
-  //return 436400 / ((v*v) - Math.pow(f*v,2));
+  var am1 = prompt("Atomic mass of first element in reactant") *1.0;
+  var anum1 = prompt("atomic number of the first element in reactant")*1.0;
+  var am2 = prompt("Atomic mass of first element in product") *1.0;
+  var anum2 = prompt("atomic number of the first element i product")*1.0;
+  var massOfRc = am1 -(anum1*me);
+  var massOfPr = am2 - (anum2*me) + me;
+  return (massOfRc - massOfPr) * 931.5;
 }
 
 function problem9(vals){
-  var n = vals[2];
-  var z = Math.sqrt(vals[1]*vals[0]*vals[0]/-13.6);
-  return 5.29 * Math.pow(10,-11) * (n*n/z);
+  return "Sorry, no program";
 }
 
 function problem10(vals){
-  var n = vals[0];
-  var r = 1.097 * Math.pow(10,-2);
-  var z = 1;
-  return -1.0/(r*z*((1.0/Math.pow(n+1,2))-(1.0/(n*n))));
-}
-
-function factorial(x){
-    x = parseInt(x, 10);
-    if (isNaN(x)) return 1;
-    
-    if (x <= 0) return 1;
-    // if x above 170, return infinity
-    if (x > 170) return Infinity;
-    // calculating the factorial
-    var y = 1;
-    for (var i = x; i>0; i--){
-        y *= i;
-    }
-    return y;
-}
-
-function choose(n, k){
-    // validating the input
-    n = parseInt(n, 10);
-    if (isNaN(n)) n = 0;
-    if (n < 0) n = 0;
-    
-    k = parseInt(k, 10);
-    if (isNaN(k)) k = 0;
-    if (k < 0) k = 0;
-    if (k > n) k = n;
-    
-    return (factorial(n)) / (factorial(k) * factorial(n - k));
+  return "Sorry, no program";
 }
 
 function toDegrees (angle) {
@@ -133,7 +128,6 @@ function parser() {
           var numVals = [];
           for(i in strVals){
             if (strVals[i] != '.') {
-                //fileDisplayArea.innerText += strVals[i] + " ";
                numVals.push(parseFloat(strVals[i]));
             };
           };
@@ -141,44 +135,27 @@ function parser() {
     };
 }
 
-/*window.onload = function()  {
-    var fileInput = document.getElementById('fileInput');
+function parser2(){
     var fileDisplayArea = document.getElementById('fileDisplayArea');
+    fileDisplayArea.innerText = "";
+    var strToBeParsed = document.getElementById('txtar2').value;
+    var queArr = strToBeParsed.split('\n');
+    for (sSub in queArr) {
+      if(parseInt(sSub) != queArr.length-1) continue;
+      var numVals = [];
+      var sInt = parseInt(queArr[parseInt(sSub)]);
+      fileDisplayArea.innerText += sInt + ') ' + startProblem(sInt,numVals) + '\n';
+    }
+}
 
-    fileInput.addEventListener('change', function(e) {
-      var file = fileInput.files[0];
-      var textType = /text.*/   /*;
-
-      if (file.type.match(textType)) {
-
-       var reader = new FileReader();
-       
-       reader.onload = function(e) {
-        fileDisplayArea.innerText = "";
-        var str = reader.result;
-        var strArr = str.split('\n');
-        for (sSub in strArr) {
-          sSub = parseInt(sSub);
-          var strVals = strArr[sSub].split(' ');
-          for(i in strVals){strVals[i] = parseFloat(strVals[i])};
-          fileDisplayArea.innerText += (sSub + 1) + ") " + startProblem((sSub+1),strVals) + '\n';
-          if(sSub == 9) break;
-        };
-       }
-
-       reader.readAsText(file);  
-
-      } else {
-        fileDisplayArea.innerText = "File not supported!";
-      }
-    });
-}*/
 </script>
 
 <body bgcolor="#FAFAD2">
   <h1 align="center" >Physics HW #13</h1>
+  <p>Just enter the problem number and input the values for that question when prompted.</p>
   <table id="page-wrapper" cellspacing="20">
-      <td><textarea id="txtar" rows="10" cols="50" oninput="parser()"></textarea></td>
+      <!--<td><textarea id="txtar" rows="10" cols="50" oninput="parser()"></textarea></td>-->
+      <td><textarea id="txtar2" rows="10" cols="2" oninput="parser2()"></textarea></td>
       <td><pre id="fileDisplayArea"></pre></td> 
   </table>
 </body>
