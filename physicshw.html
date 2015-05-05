@@ -66,7 +66,7 @@ function problem5(vals){
   var activity = prompt("5. Enter activity")*3.7*Math.pow(10,10);
   var lambda = Math.log(2) / (t12);
   var n = activity / lambda;
-  return n * 1000 * 197.968 / (6.023 * Math.pow(10,23));
+  return n * 1000 * 196.96657 / avagadro;
 }
 
 function problem6(vals){ 
@@ -97,7 +97,8 @@ function problem8(vals){
 }
 
 function problem9(vals){
-  return "Sorry, no program";
+  var am = prompt("Enter atomic mass, top-left number")*1.0;
+  return am + 1;
 }
 
 function problem10(vals){
