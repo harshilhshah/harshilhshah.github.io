@@ -102,7 +102,17 @@ function problem9(vals){
 }
 
 function problem10(vals){
-  return "Sorry, no program";
+  var am1 = prompt("Atomic mass of first element in reactant") *1.0;
+  var anum1 = prompt("atomic number of the first element in reactant")*1.0;
+  var am2 = prompt("Atomic mass of second element in reactant") *1.0;
+  var anum2 = prompt("atomic number of the second element in reactant")*1.0;
+  var am3 = prompt("Atomic mass of first element in product") *1.0;
+  var anum3 = prompt("atomic number of the first element i product")*1.0;
+  var am4 = prompt("Atomic mass of second element in product") *1.0;
+  var anum4 = prompt("atomic number of the second element in product")*1.0;
+  var massOfRc = am1 -(anum1*me) + am2 - (anum2*me);
+  var massOfPr = am3 - (anum3*me) + am4 - (anum4*me);
+  return (massOfRc - massOfPr) * 931.5;
 }
 
 function toDegrees (angle) {
@@ -152,7 +162,7 @@ function parser2(){
 </script>
 
 <body bgcolor="#FAFAD2">
-  <h1 align="center" >Physics HW #13</h1>
+  <h1 align="center" >Physics HW #14</h1>
   <p>Just enter the problem number and input the values for that question when prompted.</p>
   <table id="page-wrapper" cellspacing="20">
       <!--<td><textarea id="txtar" rows="10" cols="50" oninput="parser()"></textarea></td>-->
