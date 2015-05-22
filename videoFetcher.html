@@ -2,15 +2,15 @@
     <html>
     <header>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-     <script type='text/javascript' src='http://thevideos.tv/player6/jwplayer.js'></script>
-     <script>jwplayer.key="KjVKWhyPdli/b++XD6XrmWl40SvQ3OM4irvVxg==";</script>
     </header>
 
     <body>
 
-    <select id="showList" onchange="loadSeasons(this,'_top')">
+    <select id="showList" onchange="loadSeasons(this.value,'_top')">
         <option value=''>Select Your Show:</option>
     </select>
+
+    <input type="text" id="textbox"></input>
 
     <select id="seasonList" onchange="loadEpisodes(this)">
     </select>
@@ -22,7 +22,6 @@
     <p id="choice"></p>
     <div id="video-links"> </div>
     <div id="temp" style="display: none;"></div>
-    <span id='vplayer'><img src="http://85.17.132.227/i/01/00006/qfvhgmbyzzzs.jpg" style="width:728px;height:410px;"></span>
 
     <script>
 
@@ -53,12 +52,12 @@
     });
 
     // Load the seasons for the selected show
-    function loadSeasons(sel){
+    function loadSeasons(val){
         document.getElementById("choice").innerHTML = "";
         document.getElementById("seasonList").innerHTML = "<option>Select Season</option>";
         $("#episodeList").hide();
         $("#seasonList").show();
-        selectedShowName = sel.value;
+        selectedShowName = val;
         yqlLink =  "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fputlocker.is%2Fwatch-" + selectedShowName + "-tvshow-online-free-putlocker.html%22%20and%20xpath%3D%22(%2F%2Fdiv%5B%40class%3D'content-box'%5D%2Fh2%5Bfollowing-sibling%3A%3A*%5B1%5D%2Fself%3A%3Atable%5D%2Fa%2Fstrong)%5Blast()%5D%22&diagnostics=true";
         $.ajax({
             type: 'GET', 
@@ -112,33 +111,12 @@
 
     </script>
 
-    <script type='text/javascript'>
-  jwplayer("vplayer").setup({
-    sources: [{file:"http://85.17.132.227/kj2vzpeuem6vtaw52bkj4lwqfhmwziu4vmdntzgi4qaofiw6ooipmfkbhnnq/v.mp4",label:"240p"},{file:"http://85.17.132.227/kj2vzpeuem6vtaw52bkj4lwqfhmwziu4vmdntzgi4zt6fiw6ooimjsf2fqbq/v.mp4",label:"360p"},{file:"http://85.17.132.227/kj2vzpeuem6vtaw52bkj4lwqfhmwziu4vmdntzgi4ctofiw6ooipqo7g5pdq/v.mp4",label:"720p"}],
-    image: "http://85.17.132.227/i/01/00006/qfvhgmbyzzzs.jpg",
-    skin: "",
-    duration:"1759",
-    width: 728,
-    height: 410,
-    preload:"auto",
-    primary:"flash",
-    startparam: "start"
-    
-    ,tracks: [{file: "http://thevideos.tv/srt/00007/vyo70xy2wx69_English.srt", label: "English", kind: "captions"}]
-    ,captions: {color: '#FFFFFF', fontSize: 15, fontFamily:"Verdana", backgroundOpacity: 0},"sharing": {code: "%3CIFRAME SRC%3D%22http%3A%2F%2Fthevideos.tv%2Fembed-vyo70xy2wx69-728x410.html%22 webkitAllowFullScreen%3D%22true%22 mozallowfullscreen%3D%22true%22 allowfullscreen%3D%22true%22 frameborder%3D%220%22 marginwidth%3D%220%22 marginheight%3D%220%22 scrolling%3D%22no%22 width%3D%22728%22 height%3D%22410%22%3E%3C%2FIFRAME%3E", link: "http://thevideos.tv/vyo70xy2wx69.html"}
-  });
-var vvplay;
-var tt38287=0;
-var p038287=0;
-jwplayer().onPlay(function(x) { doPlay(x); });
-function doPlay(x)
-{
-  if(vvplay)return;
-  vvplay=1;
-  $.get('http://thevideos.tv/cgi-bin/index_dl.cgi?op=view&file_code=vyo70xy2wx69&hash=38287-67-81-1432304852-5f756304487d2fcdfc94d209ed41c5b9', function(data) {$('#fviews').html(data);} );
-}
-
-</script>
-
+    <script> 
+    $("#textbox").keyup(function(event){
+        if(event.keyCode == 13){
+            loadSeasons(document.getElementById("textbox").value);
+        }
+    });
+    </script>
     </body>
     </html>
