@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+    <html>
+    <header>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    </header>
+
+    <body>
+
+    <select id="showList" onchange="loadSeasons(this,'_top')">
+        <option value=''>Select Your Show:</option>
+    </select>
+
+    <select id="seasonList" onchange="loadEpisodes(this)">
+    </select>
+
+    <select id="episodeList" onchange="loadVideo(this)">
+        <option value=''>Select Episode:</option>
+    </select>
+
+    <p id="choice"></p>
+    <div id="video-links"> </div>
+    <div id="temp" style="display: none;"></div>
+
+    <script>
+
+    /* Initialization */
+    $("#episodeList").hide();
+    $("#seasonList").hide();
+    var listOfShows = ["Selection"];
+    var numSeasons = 0;
+    var numEpisodes = 0;
+    var selectedShowName = "";
+    var selectedSeasonNum = 1;
+    var yqlLink = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fwww.imdb.com%2Fsearch%2Ftitle%3Ftitle_type%3Dtv_series%22%20and%20xpath%3D%22%2F%2Ftd%5B%40class%3D'title'%5D%2Fa%22&diagnostics=true"; 
+
+    /* Fetching the top 50 tv shows */
+    $.ajax({
+      type: 'GET', 
+      url: yqlLink, 
+      dataType: 'html',
+      success: function(data) { 
+        $('#temp').append($(data).find('a'));
+        $("a").each(function(){
+            var optionStr = "<option value=\"" + $(this).text().replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g,'-').replace(/039/g,"").toLowerCase() + "\">" + $(this).text() + "</option>";
+            $('#showList').append(optionStr);
+        });
+      }
+    });
+
+    // Load the seasons for the selected show
+    function loadSeasons(sel){
+        document.getElementById("choice").innerHTML = "";
+        document.getElementById("seasonList").innerHTML = "<option>Select Season</option>";
+        $("#episodeList").hide();
+        $("#seasonList").show();
+        selectedShowName = sel.value;
+        yqlLink =  "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fputlocker.is%2Fwatch-" + selectedShowName + "-tvshow-online-free-putlocker.html%22%20and%20xpath%3D%22(%2F%2Fdiv%5B%40class%3D'content-box'%5D%2Fh2%5Bfollowing-sibling%3A%3A*%5B1%5D%2Fself%3A%3Atable%5D%2Fa%2Fstrong)%5Blast()%5D%22&diagnostics=true";
+        $.ajax({
+            type: 'GET', 
+            url: yqlLink, 
+            dataType: 'html',
+            success: function(data) { 
+                numSeasons = parseInt($(data).find('strong').text().replace("Season ",''));
+                $("#choice").append(numSeasons + " ");
+                for(var i = numSeasons; i > 0; i--){
+                    var optionStr = "<option value=\"" + i + "\"> Season " + i + "</option>";
+                    $('#seasonList').append(optionStr);
+                }
+            }
+        });
+    }
+
+    function loadEpisodes(sel){
+        $('#episodeList').show();
+        document.getElementById("choice").innerHTML = "";
+        document.getElementById("episodeList").innerHTML = "<option>Select Episode</option>";
+        selectedSeasonNum = sel.value;
+        yqlLink = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fputlocker.is%2Fwatch-" + selectedShowName + "-tvshow-season-" + selectedSeasonNum +"-online-free-putlocker.html%22%20and%20xpath%3D%22(%2F%2Ftd%5B%40class%3D'entry'%5D%2Fa)%5Blast()%5D%2Fstrong%22%20&diagnostics=true";
+        $.ajax({
+            type: 'GET', 
+            url: yqlLink, 
+            dataType: 'html',
+            success: function(data) { 
+                numEpisodes = parseInt($(data).find('strong').text().replace("Episode ",''));
+                $("#choice").append(numEpisodes + " ");
+                for(var i = 1; i <= numEpisodes; i++){
+                    var optionStr = "<option value=\"" + i + "\"> Episode " + i + "</option>";
+                    $('#episodeList').append(optionStr);
+                }
+            }
+        });
+    }
+
+    function loadVideo(sel){
+        document.getElementById("choice").innerHTML = "";
+        document.getElementById("video-links").innerHTML = "";
+        yqlLink = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fputlocker.is%2Fwatch-" + selectedShowName + "-tvshow-season-" + selectedSeasonNum + "-episode-" + sel.value + "-online-free-putlocker.html%22%20and%20xpath%3D%22%2F%2Fa%5B%40rel%3D'nofollow'%5D%5Bnot(img)%5D%22&diagnostics=true";
+        $.ajax({
+            type: 'GET', 
+            url: yqlLink, 
+            dataType: 'html',
+            success: function(data) { 
+                $("#video-links").append($(data).find('results'));
+            }
+        });
+    }
+
+    </script>
+
+    </body>
+    </html>
