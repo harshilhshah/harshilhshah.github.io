@@ -100,7 +100,7 @@
         document.getElementById("video-links").innerHTML = "";
         var url = "https://mighty-wildwood-6680.herokuapp.com/?url=http://putlocker.is/watch-" + selectedShowName + "-tvshow-season-" + selectedSeasonNum + "-episode-" + sel.value+ "-online-free-putlocker.html";
         window.open(url);
-        /*yqlLink = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22https%3A%2F%2Fmighty-wildwood-6680.herokuapp.com%2F%3Furl%3Dhttp%3A%2F%2Fputlocker.is%2Fwatch-" + selectedShowName + "-tvshow-season-" + selectedSeasonNum + "-episode-" + sel.value + "-online-free-putlocker.html%22%20and%20xpath%3D%22%2F%2Fiframe%22&diagnostics=true";
+        yqlLink = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22https%3A%2F%2Fmighty-wildwood-6680.herokuapp.com%2F%3Furl%3Dhttp%3A%2F%2Fputlocker.is%2Fwatch-" + selectedShowName + "-tvshow-season-" + selectedSeasonNum + "-episode-" + sel.value + "-online-free-putlocker.html%22%20and%20xpath%3D%22%2F%2Fiframe%22&diagnostics=true";
         $.ajax({
             type: 'GET', 
             url: yqlLink, 
@@ -108,7 +108,7 @@
             success: function(data) { 
                 $("#video-links").append($(data).find('results'));
             }
-        });*/
+        });
     }
 
     </script>
