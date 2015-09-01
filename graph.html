@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<script src="https://connect.facebook.net/en_US/all.js"></script>
 <body>
 <script>
   window.fbAsyncInit = function() {
@@ -18,12 +19,6 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 
-  FB.api('/search?q=rupa&type=event', function(response) {
-    if (!response || response.error) {
-    alert('Error occured');
-  }
-  console.log(response);
-  });
 
 </script>
 
@@ -33,5 +28,13 @@
   data-width="450"
   data-show-faces="true">
 </div>
+
+<script type="text/javascript">
+ FB.api('/search?q=rupa&type=event', function(response) {
+    if (!response || response.error) {
+    alert('Error occured');
+  }
+  console.log(response);
+  });</script>
 </body>
 </html>
