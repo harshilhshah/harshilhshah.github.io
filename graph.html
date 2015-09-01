@@ -17,6 +17,14 @@
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+
+  FB.api('/search?q=rupa&type=event', function(response) {
+    if (!response || response.error) {
+    alert('Error occured');
+  }
+  console.log(response);
+  });
+
 </script>
 
 <div
