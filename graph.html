@@ -15,38 +15,42 @@
           version    : 'v2.4'
         });
 
-      (function(d, s, id){
+    /*  (function(d, s, id){
          var js, fjs = d.getElementsByTagName(s)[0];
          if (d.getElementById(id)) {return;}
          js = d.createElement(s); js.id = id;
          js.src = "//connect.facebook.net/en_US/sdk.js";
          fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
+       }(document, 'script', 'facebook-jssdk'));*/
 
   var accessToken = "CAANjBmdVSEcBACyfLUuGiZBkZBZCCI1wWub5T17ZCtzdyKLXV8QU4kA3a9JCDtfDxz3LmQZCRZA0llSpg3l5JthypVRBbwJSeMlUmyZCTCZAbT4SZBn6HDUUrB4omEQdNoYxxA1u6ql1ZBKCiwA5AGBMhaeJVkCaNyfZBfHSTweVtdQWFXZBLM2xDhrXErssZAZBTQJmWCQ8sfc8uZAzwZDZD";
 
-  FB.login(function(response) {
-    if (response.authResponse) {
-     console.log('Welcome!  Fetching your information.... ');
-     FB.getLoginStatus(function(response) {
-      if (response.status === 'connected') {
+  FB.getLoginStatus(function(response) {
+    if (response.status === 'connected') {
         accessToken = response.authResponse.accessToken;
-      }
-    },true, {scope: 'user_events'});
+    }else if (response.status !== 'not_authorized') {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          accessToken = response.authResponse.accessToken;
+        }
+      },true, {scope: 'user_events'});
    } 
  });
 
+  console.log(accessToken);
 
-  FB.api('/search?q=rupa&type=event&fields=name,description,start_time,end_time,place',{access_token: accessToken }, function(response) {
+  FB.api('/search?q=rupa+present&type=event&fields=name,description,start_time,end_time,place',{access_token: accessToken }, function(response) {
     if (!response || response.error) {
       alert('Error occured');
-    }
+    }else{
     var text = "";
-    for (frame in response.data){
-      text += frame.name.toString();
-      console.log(frame);
+    var data = response.data;
+    for (var i = 0; i < data.length; i++){
+      text += data[i].name + "<br>";
+      console.log(data[i]);
     }
     $('#noclue').html(text);
+  }
   });
   </script>
 
