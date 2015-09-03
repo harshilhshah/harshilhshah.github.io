@@ -10,50 +10,6 @@
 
   <script type="text/javascript">
 
- function createCORSRequest(method, url) {
-  var xhr = new XMLHttpRequest();
-  if ("withCredentials" in xhr) {
-    // XHR for Chrome/Firefox/Opera/Safari.
-    xhr.open(method, url, true);
-  } else if (typeof XDomainRequest != "undefined") {
-    // XDomainRequest for IE.
-    xhr = new XDomainRequest();
-    xhr.open(method, url);
-  } else {
-    // CORS not supported.
-    xhr = null;
-  }
-  return xhr;
-}
-
-function getTitle(text) {
-  return text.match('<title>(.*)?</title>')[1];
-}
-
-function makeCorsRequest() {
-  // All HTML5 Rocks properties support CORS.
-  var url = 'http://ruevents.rutgers.edu/events/getEventsRss.xml';
-
-  var xhr = createCORSRequest('GET', url);
-  if (!xhr) {
-    alert('CORS not supported');
-    return;
-  }
-
-  // Response handlers.
-  xhr.onload = function() {
-    var text = xhr.responseText;
-    var title = getTitle(text);
-    alert('Response from CORS request to ' + url + ': ' + title);
-  };
-
-  xhr.onerror = function() {
-    alert('Woops, there was an error making the request.');
-  };
-
-  xhr.send();
-}
-
         FB.init({
           appId      : '953304084727879',
           xfbml      : true,
@@ -92,11 +48,16 @@ function makeCorsRequest() {
       loopOverResponse(response.data);
   });
 
-  makeCorsRequest();
+  FB.api('/youth.eagleton/events?since='+today,{access_token: accessToken }, function(response) {
+      loopOverResponse(response.data);
+  });
 
+  FB.api('/Cookiesncrepesnb/events?since='+today,{access_token: accessToken }, function(response) {
+      loopOverResponse(response.data);
+  });
   function loopOverResponse(data){
     for (var i = 0; i < data.length; i++){
-      if(data[i].description.search(/free/i) == -1) continue;
+      if(data[i].description.search(/free|food/i) == -1) continue;
       text += "<strong>" + data[i].name + "</strong><em> " + data[i].start_time + "</em><br>" + data[i].description + "<br><hr>";
       $('#noclue').html(text);
     }
