@@ -15,10 +15,6 @@
       document.getElementById('results2').innerHTML = hwArr[count - 1];
     } 
 
-    function data101(o){
-      document.getElementById('results3').innerHTML = o.query.results.body.pre.content;
-    }
-
     $.ajax({
       type: 'GET',
       url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fmath.rutgers.edu%2F~alexk%2F2015S348%2Fsyllabus.html%22%20and%20xpath%3D%22(%2F%2Ftable%5B%40border%3D'1'%5D%2Ftbody%2Ftr%2Ftd%5B4%5D%2Fsmall%5Bstring-length(text())%20!%3D%200%5D)%5Blast()%20-%201%5D%22&diagnostics=true",
@@ -28,50 +24,21 @@
       }
     });
 
-    $.ajax({
-      type: 'GET',
-      url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fwww.cs.rutgers.edu%2Fcourses%2F213%2Fclasses%2Fspring_2015_venugopal%2Fassignments%2F%22%20and%20xpath%3D%22%2F%2Fli%5Bposition()%3E1%5D%22&diagnostics=true",
-      dataType: 'html',
-      success: function(data) {
-        $('#cs213assign').append($(data).find('results'));
-      }
-    });
-
-    $.ajax({
-      type: 'GET',
-      url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fwww.cs.rutgers.edu%2Fcourses%2F213%2Fclasses%2Fspring_2015_venugopal%2Fproject%2F%22%20and%20xpath%20%3D%20%22%2F%2Fbody%2Fh3%5Blast()%5D%20%7C%20%2F%2Fbody%2F%2Ful%22&diagnostics=true",
-      dataType: 'html',
-      success: function(data) {
-        $('#cs213proj').append($(data).find('results'));
-      }
-    });
 
     </script>  
   </head>  
   <body align="center" bgcolor="#FAFAD2">
   <table><tr><th width="50%">
-   <a href="http://math.rutgers.edu/~alexk/2015S348/syllabus.html"><h1>Crypto HW</h1></a>
+   <a href="http://math.rutgers.edu/~alexk/2015S348/syllabus.html"><h1>IT HW</h1></a>
     </th><th>
    <a href="http://www.cs.rutgers.edu/~kalantar/index2015CS344Homework.html"><h1>Algo HW</h1></a></th></tr><tr><td>
    <div id='results'></div> </td><td>
    <div id='results2'></div></td></tr> </table>
    <hr>
-   <a href="http://www.cs.rutgers.edu/courses/213/classes/spring_2015_venugopal/"><h1>CS213 HW</h1></a>
-   <table>
-    <tr><th>Assignment</th><th>Project</th></tr>
-    <tr>  <td>
-      <div id = 'cs213assign'></div></td>
-      <td><div id ='cs213proj'></div>
-      </td></tr>
-    </table>
-    <h1>Data 101 HW</h1>
-    <pre id = 'results3'></pre>
-    <hr>
 
     <!-- The YQL statment will be assigned to src. --> 
     <script src="https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.cs.rutgers.edu%2F~kalantar%2Findex2015CS344Homework.html%22&format=json&diagnostics=true&callback=algoHW"></script>
      
-    <script src="https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22secure-gorge-6111.herokuapp.com%22&format=json&diagnostics=true&callback=data101"></script>
   </body>
   </html>
 
