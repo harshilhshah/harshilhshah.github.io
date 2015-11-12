@@ -1,27 +1,33 @@
 <!DOCTYPE html>
     <html>
     <header>
+    <link rel="stylesheet" type="text/css" href="css/page.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     </header>
 
     <body>
 
+<div class="main">
+    <h1>Watch your favorite shows, instantly.</h1>
+    <input type="text" class="form-control" id="search" placeholder="Search the collection"> 
+</div>
+<div class="normal-text">
     <select id="showList" onchange="loadSeasons(this.value,'_top')">
-        <option value=''>Select Your Show:</option>
+        <option value=''>Select a Popular Show:</option>
     </select>
-
-    <input type="text" id="textbox"></input>
-
-    <select id="seasonList" onchange="loadEpisodes(this)">
+     <select id="seasonList" onchange="loadEpisodes(this)">
     </select>
-
     <select id="episodeList" onchange="loadVideo(this)">
         <option value=''>Select Episode:</option>
     </select>
+</div>
 
-    <p id="choice"></p>
-    <div id="video-links"> </div>
-    <div id="temp" style="display: none;"></div>
+<div id="choice" class="normal-text"></div>
+<div id="video-links"> </div>
+
+<div class="supporting container">
+    <div id="showbox" class="row"></div>
+</div>
 
     <script>
 
@@ -35,7 +41,8 @@
     var selectedSeasonNum = 1;
     var yqlLink = "";
 
-    yqlLink = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fwww.imdb.com%2Fsearch%2Ftitle%3Ftitle_type%3Dtv_series%22%20and%20xpath%3D%22%2F%2Ftd%5B%40class%3D'title'%5D%2Fa%22&diagnostics=true"; 
+    yqlLink = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http%3A%2F%2Fwww.imdb.com%2Fsearch%2Ftitle%3Ftitle_type%3Dtv_series%22%20and%20xpath%20%3D%20%22%2F%2Ftd%5B%40class%3D'image'%5D%2Fa%2Fimg%22&diagnostics=true"; 
+
 
     /* Fetching the top 50 tv shows */
     $.ajax({
@@ -43,9 +50,13 @@
       url: yqlLink, 
       dataType: 'html',
       success: function(data) { 
-        $('#temp').append($(data).find('a'));
-        $("a").each(function(){
-            var optionStr = "<option value=\"" + $(this).text().replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g,'-').replace(/039/g,"").toLowerCase() + "\">" + $(this).text() + "</option>";
+        $('#showbox').append($(data).find('img'));
+        $("img").each(function(index,value){
+            var title = $(this).attr('title').split('(')[0].trim().replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g,'-').replace(/039/g,"").toLowerCase();
+            var img_src = $(this).attr('src').split('_')[0] + "300.jpg";
+            var imgStr = "<div class=\"col-sm-3 thumbnail\"><div id='" + title + "' onclick=\"loadSeasons(this.id)\"><img src=\"" + img_src + "\" widht='280px' height='300px'></div></div>";
+            value.outerHTML = imgStr;
+            var optionStr = "<option value=\"" + title + "\">" + $(this).attr('title').split('(')[0] + "</option>";
             $('#showList').append(optionStr);
         });
       }
@@ -53,7 +64,9 @@
 
     // Load the seasons for the selected show
     function loadSeasons(val){
-        document.getElementById("choice").innerHTML = "";
+        window.location.href="#search";
+        $("#search").val(val.replace('-',' '));
+        document.getElementById("choice").innerHTML = val + " has ";
         document.getElementById("seasonList").innerHTML = "<option>Select Season</option>";
         $("#episodeList").hide();
         $("#seasonList").show();
@@ -65,7 +78,7 @@
             dataType: 'html',
             success: function(data) { 
                 numSeasons = parseInt($(data).find('strong').text().replace("Season ",''));
-                $("#choice").append(numSeasons + " ");
+                $("#choice").append(numSeasons + " seasons.");
                 for(var i = numSeasons; i > 0; i--){
                     var optionStr = "<option value=\"" + i + "\"> Season " + i + "</option>";
                     $('#seasonList').append(optionStr);
@@ -86,7 +99,7 @@
             dataType: 'html',
             success: function(data) { 
                 numEpisodes = parseInt($(data).find('strong').text().replace("Episode ",''));
-                $("#choice").append(numEpisodes + " ");
+                $("#choice").append("Season " + selectedSeasonNum + " has " + numEpisodes + " episodes.");
                 for(var i = 1; i <= numEpisodes; i++){
                     var optionStr = "<option value=\"" + i + "\"> Episode " + i + "</option>";
                     $('#episodeList').append(optionStr);
@@ -96,9 +109,10 @@
     }
 
     function loadVideo(sel){
-        document.getElementById("choice").innerHTML = "";
         document.getElementById("video-links").innerHTML = "";
+        var putlocker_url = "http://putlocker.is/watch-" + selectedShowName + "-tvshow-season-" + selectedSeasonNum + "-episode-" + sel.value+ "-online-free-putlocker.html";
         var url = "https://mighty-wildwood-6680.herokuapp.com/?url=http://putlocker.is/watch-" + selectedShowName + "-tvshow-season-" + selectedSeasonNum + "-episode-" + sel.value+ "-online-free-putlocker.html";
+        document.getElementById("choice").innerHTML = "<a href=\"" + putlocker_url + "\">Putlocker link</a>";
         window.open(url);
         //window.location.href = url;
         yqlLink = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22https%3A%2F%2Fmighty-wildwood-6680.herokuapp.com%2F%3Furl%3Dhttp%3A%2F%2Fputlocker.is%2Fwatch-" + selectedShowName + "-tvshow-season-" + selectedSeasonNum + "-episode-" + sel.value + "-online-free-putlocker.html%22%20and%20xpath%3D%22%2F%2Fiframe%22&diagnostics=true";
@@ -115,9 +129,9 @@
     </script>
 
     <script> 
-    $("#textbox").keyup(function(event){
+    $("#search").keyup(function(event){
         if(event.keyCode == 13){
-            loadSeasons(document.getElementById("textbox").value.replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g,'-').replace(/039/g,"").toLowerCase());
+            loadSeasons(document.getElementById("search").value.replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g,'-').replace(/039/g,"").toLowerCase());
         }
     });
     </script>
